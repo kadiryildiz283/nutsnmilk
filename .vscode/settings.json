@@ -1,0 +1,9 @@
+{
+    "workbench.iconTheme": "Monokai Pro (Filter Machine) Monochrome Icons",
+    "workbench.preferredLightColorTheme": "Monokai Pro (Filter Spectrum)",
+    "workbench.preferredHighContrastLightColorTheme": "Monokai Pro (Filter Spectrum)",
+    "workbench.preferredHighContrastColorTheme": "Monokai Pro (Filter Spectrum)",
+    "workbench.preferredDarkColorTheme": "Monokai Pro (Filter Spectrum)",
+    "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+    "monokaiPro.fileIconsMonochrome": true
+}

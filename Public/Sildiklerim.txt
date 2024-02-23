@@ -1,0 +1,18 @@
+if(Canjump){
+          player.pos.y += jumpVelocity;
+          jumpVelocity -= 0.01
+          if (map[getPos.y-1][getPos.x+1]!=0 && map[getPos.y-1][getPos.x+1] != 13 && getPos.posix>=4) {
+            Canjump =false;
+            jumpVelocity = -0.5 
+            player.pos.y -= jumpVelocity;
+            Fall = true
+          }
+          if (jumpVelocity < enyuksekziplama ) {
+            Canjump=false;
+            jumpVelocity = -0.5 
+          }
+        }
+        if (Fall) {
+          player.pos.y += velocity
+          velocity+=0.01
+        }
