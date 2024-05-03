@@ -4,7 +4,7 @@
   "description": "Muq",
   "main": "main.js",
   "scripts": {
-    "start": "serve ./public",
+    "start": "serve ./src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

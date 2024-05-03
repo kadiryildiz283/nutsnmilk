@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>   
+    <canvas id="canvas" height="250" width="280"></canvas>
+    <script> 
+    // findery'nin nasıl çalıştığını console.log ile bak 15.10.2023
+    // posiy findery gibi %16 şekilde sürekli kontrol edilsin. sonra bunu zıplamaya uyarla 22.10.2023
+    // player.pos.y için posixi ayarla yani şey bu çarpışmalar posixle dönüyor onu + - olarak değiştiği için  tekrar düzenlemek gerekiyor. 
+        var context = canvas.getContext("2d");
+        function loadImage(url) {
+      return new Promise((resolve,reject) => {
+          const image = new Image();
+          image.src = url;
+          image.addEventListener('load', () => {
+              resolve(image);
+          });
+      });}
+
+      loadImage("1.png").then(image => {
+    var deltatime = 1/60;
+    var map =  [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,1,2,3,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,4,5,6,0,0,0,0,0,0,0,0,0,0,0],
+                [7,0,8,8,8,0,7,7,7,7,9,7,7,7,7,7],
+                [0,0,0,0,0,10,0,0,0,0,9,0,0,0,0,0],
+                [0,0,8,8,8,8,0,0,0,0,9,9,9,9,0,0],
+                [0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0],
+                [0,0,9,9,9,9,9,9,9,9,9,0,0,0,0,0],
+                [0,0,9,0,0,0,0,0,0,0,9,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0],
+                [0,0,0,8,0,0,0,13,0,0,0,0,8,0,0,0],
+                [8,8,8,0,8,11,8,8,0,8,8,8,8,8,8,8],
+                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                [12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12],
+                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
+    var map2 =  [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,1,2,3,0,0,0,0,0,0,0,0,0,0,0],
+                [0,0,4,5,6,0,0,0,0,0,0,0,0,0,0,0],
+                [7,0,8,8,8,0,7,7,7,7,9,7,7,7,7,7],
+                [0,0,0,0,0,10,0,0,0,0,9,0,0,0,0,0],
+                [0,0,8,8,8,8,0,0,0,0,9,9,9,9,0,0],
+                [0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0],
+                [0,0,9,9,9,9,9,9,9,9,9,0,0,0,0,0],
+                [0,0,9,0,0,0,0,0,0,0,9,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0],
+                [0,0,0,8,0,0,0,13,0,0,0,0,8,0,0,0],
+                [8,8,8,0,8,11,8,8,0,8,8,8,8,8,8,8],
+                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                [12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12],
+                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]  
+
+    var player = {
+      pos : {
+        x  :0,
+        y  :0
+      }
+    }
+    
+                class SpriteSheet {
+          constructor(image, width, height) {
+              this.image = image;
+              this.width = width;
+              this.height = height;
+              this.tiles = new Map();
+          }
+    
+          define(name, x, y, width, height) {
+              const buffer = document.createElement('canvas');
+              buffer.width = width;
+              buffer.height = height;
+              buffer
+                  .getContext('2d')
+                  .drawImage(
+                      this.image,
+                      x,
+                      y,
+                      width,
+                      height,
+                      0,
+                      0,
+                      width,
+                      height);
+              this.tiles.set(name, buffer)
+          }
+          defineTile(name, x, y) {
+              this.define(
+                  name,
+                  x * this.width,
+                  y * this.height,
+                  this.width,
+                  this.height);
+          }
+          draw(name, context, x, y) {
+              const buffer = this.tiles.get(name);
+              context.drawImage(buffer, x, y);
+          }
+      }
+      var sprites = new SpriteSheet(image,16,16);
+          sprites.defineTile('sea', 3, 7);
+          sprites.defineTile('wall', 2, 6);
+          sprites.defineTile('stairs', 0, 7);
+          sprites.defineTile('pipe', 5, 6);
+          sprites.defineTile('jumping', 1, 7);
+          sprites.defineTile('apple', 0,5);
+          sprites.defineTile('home6', 8,7);
+          sprites.defineTile('home5', 7,7);
+          sprites.defineTile('home4', 6,7);
+          sprites.defineTile('home2', 7,6);
+          sprites.defineTile('home1', 6,6);
+          sprites.defineTile('home3', 8,6);
+          sprites.defineTile('idle', 0,0);
+          sprites.defineTile('rrun-1', 0,1);
+          sprites.defineTile('rrun-2', 1,1);
+          sprites.defineTile('rrun-3', 2,1);
+          sprites.defineTile('rrun-4', 3,1);
+        var AnimRight = {
+          condition: false,
+          whichAnim: 0,
+          runs : ['idle',"rrun-1","rrun-2","rrun-3","rrun-4"],
+          fps: 0.5,
+            };
+          function backgroundLoad() {
+            map.forEach((item, y) => {
+              item.forEach((value, x) => {
+                if (value==13) {
+                    sprites.draw(AnimRight.runs[AnimRight.whichAnim],context,(x*16)+player.pos.x,(y*16)+player.pos.y)
+                }
+                if (value==12) {
+                    sprites.draw("sea",context,x*16,y*16)
+                }
+                if (value==11) {
+                  sprites.draw("jumping",context,x*16,y*16)
+                }
+                if (value==10) {
+                  sprites.draw("apple",context,x*16,y*16);
+                }
+                if (value==9) {
+                  sprites.draw("stairs",context,x*16,y*16);
+                }
+                if (value==8) {
+                  sprites.draw("wall",context,x*16,y*16)
+                }
+                if (value==7) {
+                  sprites.draw("pipe",context,x*16,y*16)
+                }
+                if (value==6) {
+                  sprites.draw("home6",context,x*16,y*16)
+                }
+                if (value==1) {
+                  sprites.draw("home1",context,x*16,y*16)
+                }
+                if (value==5) {
+                  sprites.draw("home5",context,x*16,y*16)
+                }
+                if (value==4) {
+                  sprites.draw("home4",context,x*16,y*16)
+                }
+                if (value==3) {
+                  sprites.draw("home3",context,x*16,y*16)
+                }
+                if (value==2) {
+                  sprites.draw("home2",context,x*16,y*16)
+                }
+                //if (value == 0 ) {
+                  //  context.strokeStyle = "gray";
+                    //context.strokeRect(x*16, y*16, 16, 16); 
+                //}
+              });
+            });
+          }
+
+var horizontal =0;
+var vertical =0;
+var deneme = false;
+var jumpVelocity =-0.5;
+var Canjump = false;
+var mustFall = false;
+var velocity = 0.2;
+var oncekidegerx=0;
+var oncekidegery=0;
+var Fall = false;
+var enyuksekziplama  = -1.1;
+
+class GetPos{
+    constructor(idleNumber){
+        this.keyboardbool = true;
+        this.idleNumber = idleNumber;
+        this.direction  = "notSet";
+        this.posix = 0;
+        this.posiy = 0;
+        this.finderx = 0;
+    }
+    getIdlePos = () =>{
+    map2.forEach((item,y) =>{
+        item.forEach((value,x) => {
+            if(value == this.idleNumber)
+            {    
+                this.x = x;
+                this.y = y;
+            }
+                     })
+                 })
+     }
+     
+     setIdlePos = () => {
+              this.finderx = player.pos.x/ 16;
+              this.findery = player.pos.y/ 16;
+              if (this.finderx<0 && this.finderx > oncekidegerx) {
+                this.finderx = Math.floor(this.finderx)
+              }
+              if (this.finderx<0 && this.finderx < oncekidegerx) {
+                this.finderx = Math.ceil(this.finderx)
+              }
+              if (this.finderx>0 && this.finderx > oncekidegerx) {
+                this.finderx = Math.floor(this.finderx)
+              }
+              if (this.finderx>0 && this.finderx < oncekidegerx) {
+                this.finderx = Math.ceil(this.finderx)
+              }
+              if (this.findery<0 && this.findery > oncekidegery) {
+                this.findery = Math.floor(this.findery)
+              }
+              if (this.findery<0 && this.findery < oncekidegery) {
+                this.findery = Math.ceil(this.findery)
+              }
+              if (this.findery>0 && this.findery > oncekidegery) {
+                this.findery = Math.floor(this.findery)
+              }
+              if (this.findery>0 && this.findery < oncekidegery) {
+                this.findery = Math.ceil(this.findery)
+              }
+              oncekidegerx = this.finderx
+              oncekidegery = this.findery
+              map2[this.findery+10][this.finderx+7] = this.idleNumber;
+              map2[this.y][this.x] = 0;
+              
+              if (this.finderx>=1 || this.finderx <=-1) {
+                map2[10][7] = 0;
+              }
+            }
+     x = () => {
+        return this.x
+     }
+     y =() => {
+        return this.y
+     }
+     posix = () => {
+      return this.posix
+     }
+     posiy = () => {
+      return this.posiy
+     }
+
+     keyboard =() => {
+     document.addEventListener("keydown", () =>{
+      if (this.keyboardbool == true) {
+      if(event.keyCode == 39) {
+        this.direction ="right"
+        player.pos.x+=4;
+        this.posix+=4;
+      }
+      if(event.keyCode == 40) {
+        player.pos.y+=4
+        this.posiy+=4;
+      }
+      if(event.keyCode == 37) {
+        this.direction="left"
+        player.pos.x-=4
+        this.posix-=4;
+      }
+      if(event.keyCode == 38) {
+        player.pos.y-=4
+        this.posiy-=4;
+      }
+      if(event.keyCode == 32) {
+        this.Canjump = true
+      }
+    }
+     })}
+     hitbox = () => {
+      this.posix = player.pos.x % 16
+        console.log(this.posix)
+      for(let i = -1; i <2; i++)
+        {
+            for(let i2 = -1; i2 <2; i2++)
+            {
+            if(map[this.y+i][this.x+i2]==0){
+                context.strokeStyle = "red";
+                context.strokeRect((this.x+i2)*16, (this.y+i)*16, 16, 16); 
+            }
+            else{
+                context.strokeStyle = "blue";
+                context.strokeRect((this.x+i2)*16, (this.y+i)*16, 16, 16);
+            }
+        }
+        }
+     }
+     OnFloor = () => {
+      if(map[this.y+1][this.x]!=0 && this.posiy>0)
+      {
+        this.posiy = 0;
+        player.pos.y = this.findery*16
+        console.log(this.posiy)
+      }}
+      NoFloor = () => {
+      if(map[this.y+1][this.x]==0)
+      {
+        player.pos.y+=0.6;
+        this.keyboardbool = false;
+        // i gibi değişkene bağlalyıp ne kadar düştüğünğü görüp kontrol edilebilir. 
+      }
+      else{
+        this.keyboardbool = true;
+      }
+      }
+      Jump = () => {
+        if(this.Canjump == true)
+        {
+          player.pos.y-=1
+          this.posiy -=1
+        }
+        if(player.pos.y < -30){
+          console.log(player.pos.y)
+          this.Canjump = false;
+        }
+      }
+     collision = () => {
+        //sağdaki giderken çarpışma için 
+       if(map[this.y][this.x+1]!=0&& map[this.y][this.x+1]!=13&& this.direction =="right" && this.posix>=4)
+        {
+          player.pos.x = player.pos.x-4;
+          this.posix = 0;
+          console.log("sag çalışıyor");
+        }
+        ////////////////////////////
+        if(map[this.y][this.x-1]!=0 && map[this.y][this.x-1]!=13 && this.direction =="left" && this.posix<=-4)
+        {
+          player.pos.x = player.pos.x+4;
+          this.posix = 0;
+          console.log("sol çalışıyor");
+        }
+     }
+}
+
+var getPos = new GetPos(13);
+
+var accu =0;
+var dropcounter = 0;
+var lastTime=0;
+var getPos;
+var baslangic = 0;
+var sayac = 0;
+
+
+
+var animation = (data) => { 
+  if (data.condition)
+  { sayac += deltatime; 
+    if (sayac < data.fps ) 
+    {
+      data.whichAnim = Math.floor(sayac / (data.fps / data.runs.length)+1); 
+      if (data.whichAnim > data.runs.length-1) {
+        data.whichAnim  = 1
+      }
+    } 
+      else{ 
+        sayac = 0; 
+        data.whichAnim = 1; 
+        data.condition = false; 
+      } 
+    } 
+    }
+    var artik = 0;
+
+    function update(time = 0) {
+        accu = (time- lastTime)/1000
+		    const deltatime= time- lastTime
+    		lastTime=time
+	    	dropcounter+=deltatime  
+        accu -= time;
+        context.fillStyle = '#000';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        backgroundLoad();
+        getPos.getIdlePos();
+        getPos.setIdlePos();
+        getPos.hitbox();
+        getPos.collision();
+        getPos.OnFloor();
+        getPos.NoFloor();
+        getPos.Jump();
+        artik = player.pos.y %16
+        var artik2 = player.pos.x % 16
+        console.log(player.pos.x)
+        animation(AnimRight);
+        requestAnimationFrame(update);
+        }
+
+update();
+
+getPos.keyboard();
+    })
+        </script>
+</body>
+</html>
