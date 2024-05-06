@@ -3,10 +3,8 @@ import Trait from "./Trait.js";
 import PosOfSprite from "./PosOfSprite.js";
 import {map} from "./map.js";
 import {sprites} from "./sprite.js"
-
 var canvas  = document.getElementById('canvas');
 var context = canvas.getContext("2d");
-
 class Nuts {
     constructor() {
       this.pos = new Vec2 ();

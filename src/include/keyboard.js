@@ -17,36 +17,28 @@ class KeyboardState{
     }
     handleEvent(event){
       const {keyCode} = event ;
-
       if (!this.KeyMap.has(keyCode)) {
         return false;
       }
-
     const KeyState = event.type ==='keydown' ? 1 : 0; 
 
     if (this.KeyStates.get(keyCode)===KeyState) {
       return;
     }
-
     this.KeyStates.set(keyCode, KeyState);
-
     this.KeyMap.get(keyCode)(KeyState);
     }
-    
   listenTo(window){
     ['keydown','keyup'].forEach(eventName =>{
       window.addEventListener(eventName, event =>{
       this.handleEvent(event); 
       })
     })
-
   }
-
   }    
      if (keyon.up==1) {
       nuts.pos.y-=5
     } 
-
   const input = new KeyboardState;
   input.addMapping(space, KeyState => {
     if(KeyState){keyon.space = 1;}
@@ -60,14 +52,37 @@ class KeyboardState{
    if(KeyState){keyon.down = 1;}
     if(!KeyState){keyon.down = 0;}
 });
-
   input.addMapping(37, KeyState => {
     if(KeyState){keyon.left = 1;}
     if(!KeyState){keyon.left = 0;}
   });
-  
   input.addMapping(39, KeyState => {
     if(KeyState){keyon.right = 1;}
     if(!KeyState){keyon.right = 0;}
   });
-export {KeyboardState,input,controller,space,keyon}
+var movementRules = (check) => {if(keyon.up == 1) {
+        if (check.top == 1) {
+          nuts.pos.y +=1
+        }
+        nuts.pos.y -= 1
+      } 
+      if(keyon.down == 1 ){
+        if(check.bot ==1) {
+          nuts.pos.y -=1
+        } 
+        nuts.pos.y += 1
+      }  
+      if(keyon.right == 1 ){
+        if (check.right==1) {
+          nuts.pos.x-=1
+        }
+        nuts.pos.x += 0.50
+      } 
+      if(keyon.left == 1 ){
+        if (check.left ==1) {
+          nuts.pos.x +=1
+        }
+        nuts.pos.x -= 1
+      }
+}
+export {KeyboardState,input,controller,space,keyon,movementRules}
