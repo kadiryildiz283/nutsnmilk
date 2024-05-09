@@ -1,4 +1,5 @@
 import loadImage from "./include/Load.js";
+import {idle, allOfAnimations} from "./include/animation.js";
 import Trait from "./include/Trait.js";
 import Vec2 from "./include/Vec2.js";
 import PosOfSprite from "./include/PosOfSprite.js";
@@ -8,7 +9,7 @@ import {map} from "./include/map.js";
 import Nuts from "./include/Nuts.js";
 import { } from "./include/sprite.js";
 import SpriteSheet from "./include/SpriteSheet.js";
-import {jumper} from "./jump.js"
+import {jumper} from "./include/jump.js"
 var keyboardactive = new KeyboardState();
 loadImage("./include/img/1.png").then(image => {    
   var canvas  = document.getElementById('canvas');

@@ -3,6 +3,7 @@ import Trait from "./Trait.js";
 import PosOfSprite from "./PosOfSprite.js";
 import {map} from "./map.js";
 import {sprites} from "./sprite.js"
+import {allOfAnimations, idle} from "./animation.js"
 var canvas  = document.getElementById('canvas');
 var context = canvas.getContext("2d");
 class Nuts {
@@ -64,7 +65,7 @@ class Nuts {
             sprites.draw("home2",context,x*16,y*16)
           }
           if (value==13) {
-            sprites.draw("idle",context,x*16+this.pos.x,y*16+this.pos.y)
+            sprites.draw(allOfAnimations[idle.get()],context,x*16+this.pos.x,y*16+this.pos.y)
           this.x = this.pos.x+(x*16);
           this.y = this.pos.y+(y*16);
         }

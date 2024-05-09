@@ -1,12 +1,16 @@
 import {nuts} from "./GetPos.js";
-var controller =1;
+import {jumper} from "./jump.js"
+import {idle} from "./animation.js"
+var variab = 0;
+var onGround = false;
+var controller =1
 const space = 32;
 var keyon={ 
   right: 0,
   left:0,
   space:0
 };
-
+var jumpLimitY = 0;
 class KeyboardState{
     constructor(){
       this.KeyStates = new Map();
@@ -41,11 +45,15 @@ class KeyboardState{
     } 
   const input = new KeyboardState;
   input.addMapping(space, KeyState => {
-    if(KeyState){keyon.space = 1;}
+    if(KeyState){
+    keyon.space = 1;
+    jumper.log();
+    jumpLimitY = jumper.logger; 
+  }
     if(!KeyState){keyon.space = 0;}
-});
-  input.addMapping(38, KeyState => {
-   if(KeyState){keyon.up = 1;}
+}); 
+   input.addMapping(38, KeyState => {
+    if(KeyState){keyon.up = 1;}
     if(!KeyState){keyon.up = 0;}
 }); 
    input.addMapping(40, KeyState => {
@@ -67,12 +75,18 @@ var movementRules = (check) => {if(keyon.up == 1) {
         nuts.pos.y -= 1
       } 
       if(keyon.down == 1 ){
-        if(check.bot ==1) {
-          nuts.pos.y -=1
+        if(check.bot ==1) { 
+        nuts.pos.y -=1
         } 
         nuts.pos.y += 1
-      }  
+      }
       if(keyon.right == 1 ){
+          if(variab  >= 4){
+      variab = 1;
+          }
+        variab+= 0.1;
+         idle.set(variab)
+        
         if (check.right==1) {
           nuts.pos.x-=1
         }
@@ -85,4 +99,4 @@ var movementRules = (check) => {if(keyon.up == 1) {
         nuts.pos.x -= 1
       }
 }
-export {KeyboardState,input,controller,space,keyon,movementRules}
+export {KeyboardState,input,controller,space,keyon,movementRules,onGround,jumpLimitY}
