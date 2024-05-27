@@ -69,34 +69,57 @@ class KeyboardState{
     if(!KeyState){keyon.right = 0;}
   });
 var movementRules = (check) => {if(keyon.up == 1) {
-        if (check.top == 1) {
+       	if (check.top == 1) {
+	 if(variab >= 8){
+		variab = 5;
+	 }
+          variab+= 0.1;
+          idle.set(variab)
+
           nuts.pos.y +=1
         }
         nuts.pos.y -= 1
       } 
       if(keyon.down == 1 ){
-        if(check.bot ==1) { 
+         if(variab  >= 4){
+     		 variab = 1;
+          }
+         	variab+= 0.1;
+       	  idle.set(variab)
+	if(check.bot ==1) { 
         nuts.pos.y -=1
         } 
         nuts.pos.y += 1
       }
       if(keyon.right == 1 ){
-          if(variab  >= 4){
-      variab = 1;
+	   if(variab < 9 ){
+	   	variab = 9
+	   }
+          if(variab  >= 12){
+     		 variab = 9;
           }
-        variab+= 0.1;
-         idle.set(variab)
-        
+         	variab+= 0.1;
+       	  idle.set(variab)
+  
         if (check.right==1) {
           nuts.pos.x-=1
         }
         nuts.pos.x += 0.50
       } 
       if(keyon.left == 1 ){
-        if (check.left ==1) {
+	  if(variab < 13 ){
+	   	variab = 13
+	   }
+	   
+          if(variab  >= 16){
+     		 variab = 13;
+          }
+         	variab+= 0.1;
+       	  idle.set(variab)
+	 if (check.left ==1) {
           nuts.pos.x +=1
         }
-        nuts.pos.x -= 1
+        nuts.pos.x -= 0.50
       }
 }
 export {KeyboardState,input,controller,space,keyon,movementRules,onGround,jumpLimitY}

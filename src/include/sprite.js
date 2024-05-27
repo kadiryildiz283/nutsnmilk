@@ -24,8 +24,6 @@ loadImage("./include/img/1.png").then(image => {
   sprites.defineTile('idle-15', 6, 1);
   sprites.defineTile('idle-16',7,1)
 
-
-
   sprites.defineTile('sea', 3, 7);
   sprites.defineTile('wall', 2, 6);
   sprites.defineTile('stairs', 0, 7);
