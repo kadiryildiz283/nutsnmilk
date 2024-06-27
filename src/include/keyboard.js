@@ -1,6 +1,7 @@
 import {nuts} from "./GetPos.js";
 import {jumper} from "./jump.js"
 import {idle} from "./animation.js"
+// enemy'i hallet canım kadirimmmmm...
 var variab = 0;
 var onGround = false;
 var controller =1
@@ -81,6 +82,7 @@ var movementRules = (check) => {if(keyon.up == 1) {
         nuts.pos.y -= 1
       } 
       if(keyon.down == 1 ){
+        nuts.enemyposy += 1;
          if(variab  >= 4){
      		 variab = 1;
           }
@@ -98,28 +100,28 @@ var movementRules = (check) => {if(keyon.up == 1) {
           if(variab  >= 12){
      		 variab = 9;
           }
-         	variab+= 0.1;
+         	variab+= 0.2;
        	  idle.set(variab)
   
         if (check.right==1) {
           nuts.pos.x-=1
         }
-        nuts.pos.x += 0.50
+        nuts.pos.x += 1
+        nuts.enemypos.x -=1
       } 
       if(keyon.left == 1 ){
 	  if(variab < 13 ){
 	   	variab = 13
 	   }
-	   
           if(variab  >= 16){
      		 variab = 13;
           }
-         	variab+= 0.1;
+         	variab+=0.2;
        	  idle.set(variab)
 	 if (check.left ==1) {
           nuts.pos.x +=1
         }
-        nuts.pos.x -= 0.50
+        nuts.pos.x -= 1
       }
 }
 export {KeyboardState,input,controller,space,keyon,movementRules,onGround,jumpLimitY}

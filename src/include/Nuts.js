@@ -10,13 +10,14 @@ class Nuts {
     constructor() {
       this.pos = new Vec2 ();
       this.vel = new Vec2 ();       
+      this.enemypos = new Vec2();
       this.x = 0;
       this.y = 0;
       this.width = 16;
       this.heigth = 16;
       this.traits = [];
       this.posOfSprites = [];
-}
+    }
     addTrait(trait){
       this.traits.push(trait);
       this[trait.NAME] = trait;
@@ -69,6 +70,9 @@ class Nuts {
           this.x = this.pos.x+(x*16);
           this.y = this.pos.y+(y*16);
         }
+          if(value == 14){
+          sprites.draw("enemy-1",context,x*16+this.enemypos.x,y*16+this.enemypos.y)
+          }
         });
       });
     }

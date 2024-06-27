@@ -10,8 +10,10 @@ var allpipe = [
   ["Sea", 12],
   ["Jumper", 11],
   ["Apple", 10],
-  ["Home", 5]
+  ["Home", 5],
+  ["enemy-1",14]
 ];
+
 var collission = false;
 var instances = [];
 var dinamikkutup = [];

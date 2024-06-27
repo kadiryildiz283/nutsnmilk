@@ -24,6 +24,22 @@ loadImage("./include/img/1.png").then(image => {
   sprites.defineTile('idle-15', 6, 1);
   sprites.defineTile('idle-16',7,1)
 
+  sprites.defineTile('enemy-1', 0, 2);
+  sprites.defineTile('enemy-2', 1, 2);
+  sprites.defineTile('enemy-3', 2, 2);
+  sprites.defineTile('enemy-4',3,2)
+  sprites.defineTile('enemy-5', 4, 2);
+  sprites.defineTile('enemy-6', 5, 2);
+  sprites.defineTile('enemy-7', 6, 2);
+  sprites.defineTile('enemy-8',7,2)
+  sprites.defineTile('enemy-9', 0, 3);
+  sprites.defineTile('enemy-10', 1, 3);
+  sprites.defineTile('enemy-11', 2, 3);
+  sprites.defineTile('enemy-12',3,3)
+  sprites.defineTile('enemy-13', 4, 3);
+  sprites.defineTile('enemy-14', 5, 3);
+  sprites.defineTile('enemy-15', 6, 3);
+  sprites.defineTile('enemy-16',7,3)
   sprites.defineTile('sea', 3, 7);
   sprites.defineTile('wall', 2, 6);
   sprites.defineTile('stairs', 0, 7);
