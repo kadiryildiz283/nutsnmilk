@@ -1,6 +1,8 @@
+// nuts sınıfı altıda enemy çalışmıyor ona ayrı class aç ve 
+// onun classında kendini bastırmasını sağla.
+
+
 import Vec2 from "./Vec2.js";
-import Trait from "./Trait.js";
-import PosOfSprite from "./PosOfSprite.js";
 import {map} from "./map.js";
 import {sprites} from "./sprite.js"
 import {allOfAnimations, idle} from "./animation.js"
@@ -71,7 +73,7 @@ class Nuts {
           this.y = this.pos.y+(y*16);
         }
           if(value == 14){
-          sprites.draw("enemy-1",context,x*16+this.enemypos.x,y*16+this.enemypos.y)
+          sprites.draw("enemy-1",context,x*16+this.enemypos.x-64,y*16+this.enemypos.y)
           }
         });
       });

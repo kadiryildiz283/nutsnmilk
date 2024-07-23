@@ -105,7 +105,7 @@ var checkCollision = (rect1, rect2) => {
   }
   return false;
 };
-var whereIs = () => {
+var whereIs = (char) => {
   let tile = {
     x: 0,
     y: 0,
@@ -121,16 +121,16 @@ var whereIs = () => {
     tile.x = allcol[y][1][1];
     tile.y = allcol[y][1][0];
     tile.name = allcol[y][0];
-    if (checkRight(nuts,tile)) {
+    if (checkRight(char,tile)) {
       check.right = 1
     }
-    if (checkLeft(nuts,tile)) {
+    if (checkLeft(char,tile)) {
       check.left = 1
     }
-    if (checkBottom(nuts,tile)) {
+    if (checkBottom(char,tile)) {
       check.bot = 1
     }
-    if (checkTop(nuts,tile)) {
+    if (checkTop(char,tile)) {
       check.top = 1
     }
   }
