@@ -121,4 +121,5 @@ var movementRules = (check) => {if(keyon.up == 1) {
         nuts.pos.x -= 1
       }
 }
+
 export {KeyboardState,input,controller,space,keyon,movementRules,onGround,jumpLimitY}

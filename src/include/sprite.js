@@ -5,7 +5,6 @@ import loadImage from "./Load.js";
 var sprites = new SpriteSheet(null,16,16);
 
 loadImage("./include/img/1.png").then(image => {
-  // sprites değişkeninin image özelliğini ayarla
   sprites.image = image;
   sprites.defineTile('idle-1', 0, 0);
   sprites.defineTile('idle-2', 1, 0);

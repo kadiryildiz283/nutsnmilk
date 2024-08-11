@@ -58,7 +58,8 @@ var checkRight = (rect1, rect2) => {
       (rect1.y <= rect2.y +8) && (rect1.y >= rect2.y -8)
   )
   {
-    return true;
+  console.log("log");
+  return true;
   }
   return false;
   };
@@ -94,17 +95,6 @@ var checkTop = (rect1, rect2) => {
   }
     return false;
   };
-var checkCollision = (rect1, rect2) => {
-  if(rect1.x + rect1.width > rect2.x  &&
-     !(rect1.x >= rect2.x + rect2.width) &&
-     rect1.y < rect2.y+ rect2.heigth &&
-     !(rect1.y + rect1.heigth<= rect2.y) 
-  )
-  {
-    return true;
-  }
-  return false;
-};
 var whereIs = (char) => {
   let tile = {
     x: 0,

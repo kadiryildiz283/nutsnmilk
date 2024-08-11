@@ -2,8 +2,7 @@ import loadImage from "./include/Load.js";
 import {nuts,whereIs,check} from "./include/GetPos.js";
 import {input,movementRules} from "./include/keyboard.js";
 import {} from "./include/sprite.js";
-import {move} from "./include/enemy.js";
-
+import {move,idlevsenemy} from "./include/enemy.js";
 loadImage("./include/img/1.png").then(image => {    
   var canvas  = document.getElementById('canvas');
   var context = canvas.getContext("2d");
@@ -13,7 +12,6 @@ loadImage("./include/img/1.png").then(image => {
   context.scale(2,2);
   nuts.pos.set(0,0);
   nuts.enemypos.set(64,0);
-  console.log(image);
   input.listenTo(window);
     function update(time = 0) {
       accu = (time- lastTime)/1000;
@@ -26,6 +24,7 @@ loadImage("./include/img/1.png").then(image => {
       accu -= time;
       whereIs(nuts);
       movementRules(check);
+      idlevsenemy();
     }
       requestAnimationFrame(update);}
   update();

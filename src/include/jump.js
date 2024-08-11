@@ -23,7 +23,7 @@ class Jump extends Trait {
       nuts.pos.y +=0.5;
     }
   if(check.bot == 1) {
-      nuts.pos.y-=1;
+      nuts.pos.y -= 0.5;
     }
   }
 

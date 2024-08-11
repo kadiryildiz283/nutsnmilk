@@ -5,7 +5,7 @@
 import Vec2 from "./Vec2.js";
 import {map} from "./map.js";
 import {sprites} from "./sprite.js"
-import {allOfAnimations, idle} from "./animation.js"
+import {allOfAnimations2,allOfAnimations, idle, enemy} from "./animation.js"
 var canvas  = document.getElementById('canvas');
 var context = canvas.getContext("2d");
 class Nuts {
@@ -73,7 +73,7 @@ class Nuts {
           this.y = this.pos.y+(y*16);
         }
           if(value == 14){
-          sprites.draw("enemy-1",context,x*16+this.enemypos.x-64,y*16+this.enemypos.y)
+          sprites.draw(allOfAnimations2[enemy.get()],context,x*16+this.enemypos.x-64,y*16+this.enemypos.y)
           }
         });
       });
