@@ -58,7 +58,6 @@ var checkRight = (rect1, rect2) => {
       (rect1.y <= rect2.y +8) && (rect1.y >= rect2.y -8)
   )
   {
-  console.log("log");
   return true;
   }
   return false;
