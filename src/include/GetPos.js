@@ -110,17 +110,40 @@ var whereIs = (char) => {
     tile.x = allcol[y][1][1];
     tile.y = allcol[y][1][0];
     tile.name = allcol[y][0];
+    if(tile.name == "Stairs"){
+    tile.x = allcol[y][1][1]-8;
+    tile.y = allcol[y][1][0]-8;
+    }
+    if(tile.name == "enemy-1"){
+    tile.x = allcol[y][1][1]+23538;
+    tile.y = allcol[y][1][0]-122138;
+    }
     if (checkRight(char,tile)) {
-      check.right = 1
+      check.right =1;
+      if ( tile.name =="Stairs") {
+      check.right = 0;
+      check.bot = 3;
+      }
     }
     if (checkLeft(char,tile)) {
       check.left = 1
+    if (tile.name =="Stairs") {
+      check.left = 0;
+      check.bot = 3;
+      }
     }
     if (checkBottom(char,tile)) {
       check.bot = 1
+    if (tile.name =="Stairs") {
+        check.bot = 3;
+      }
     }
     if (checkTop(char,tile)) {
       check.top = 1
+    if (tile.name =="Stairs") {
+      check.top = 0;
+      check.bot = 3;
+      }
     }
   }
   );

@@ -1,6 +1,5 @@
 import Trait from "./Trait.js";
 import {nuts,check} from "./GetPos.js"
-import {jumpLimitY,onGround} from "./keyboard.js"
 class Jump extends Trait {
   constructor(){
       super("jump");
@@ -20,7 +19,8 @@ class Jump extends Trait {
     }
   
   if (check.bot == 0 ){
-      nuts.pos.y +=0.5;
+      nuts.pos.y +=0.5; // gravity
+    
     }
   if(check.bot == 1) {
       nuts.pos.y -= 0.5;

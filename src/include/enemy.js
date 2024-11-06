@@ -48,8 +48,6 @@ var idlevsenemy = () => {
 var enemycatchtop = () => {
  realenemyposy = nuts.enemypos.y + 144;
  realenemyposx = nuts.enemypos.x + 112;
-//get pos from stairs and idle, if idle go top 
-//then enemy go x pos to stairs x and go top 
 allcol.forEach((value ) =>{
     value.forEach((element)  => {
        if (element == "Stairs" ) {
